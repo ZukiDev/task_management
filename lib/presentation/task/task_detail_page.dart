@@ -5,6 +5,7 @@ import '../../core/network/api_client.dart';
 import '../../core/network/api_exception.dart';
 import '../../core/routing/app_routes.dart';
 import '../../core/utils/date_formatter.dart';
+import '../../core/utils/task_change_notifier.dart';
 import '../../data/datasources/task_remote_datasource.dart';
 import '../../data/local/session_storage.dart';
 import '../../data/models/task_model.dart';
@@ -57,6 +58,11 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
         _task = updated;
         _isUpdatingStatus = false;
       });
+      TaskChangeNotifier().notify();
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Status task berhasil diperbarui')),
+      );
     } on ApiException catch (e) {
       setState(() => _isUpdatingStatus = false);
       if (!mounted) return;
@@ -70,7 +76,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
     final result = await Navigator.of(
       context,
     ).pushNamed(AppRoutes.taskForm, arguments: _task);
-    if (result == true) {
+    if (result is String) {
       // Ambil ulang data terbaru setelah edit.
       try {
         final refreshed = await taskRepository.getTaskById(_task.id);
@@ -79,6 +85,10 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
         // Jika gagal refresh, tetap tampilkan data lama tanpa mengganggu
         // pengalaman pengguna dengan error tambahan.
       }
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(result)));
     }
   }
 
@@ -109,8 +119,9 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
     setState(() => _isDeleting = true);
     try {
       await taskRepository.deleteTask(_task.id);
+      TaskChangeNotifier().notify();
       if (!mounted) return;
-      Navigator.of(context).pop(true);
+      Navigator.of(context).pop('Task berhasil dihapus');
     } on ApiException catch (e) {
       setState(() => _isDeleting = false);
       if (!mounted) return;

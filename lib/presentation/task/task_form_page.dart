@@ -88,7 +88,10 @@ class _TaskFormPageState extends State<TaskFormPage> {
     if (!mounted) return;
 
     if (result != null) {
-      Navigator.of(context).pop(true);
+      final message = _controller.isEditMode
+          ? 'Task berhasil diperbarui'
+          : 'Task berhasil ditambahkan';
+      Navigator.of(context).pop(message);
     } else if (_controller.errorMessage != null) {
       ScaffoldMessenger.of(
         context,

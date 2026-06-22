@@ -164,7 +164,14 @@ class _DatePageState extends State<DatePage> {
               task: task,
               onTap: () => Navigator.of(context)
                   .pushNamed(AppRoutes.taskDetail, arguments: task)
-                  .then((_) => _loadTasks()),
+                  .then((result) async {
+                    await _loadTasks();
+                    if (result is String && mounted) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(result)));
+                    }
+                  }),
             ),
           ),
         )

@@ -57,10 +57,14 @@ class _TaskListPageState extends State<TaskListPage> {
     final success = await _controller.toggleStatus(task);
     if (!mounted) return;
     setState(() {});
-    if (!success && _controller.errorMessage != null) {
+    if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(_controller.errorMessage!)),
+        const SnackBar(content: Text('Status task berhasil diperbarui')),
       );
+    } else if (_controller.errorMessage != null) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(_controller.errorMessage!)));
     }
   }
 
@@ -77,7 +81,10 @@ class _TaskListPageState extends State<TaskListPage> {
           ),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('Hapus', style: TextStyle(color: AppColors.danger)),
+            child: const Text(
+              'Hapus',
+              style: TextStyle(color: AppColors.danger),
+            ),
           ),
         ],
       ),
@@ -92,26 +99,37 @@ class _TaskListPageState extends State<TaskListPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          success ? 'Task berhasil dihapus' : (_controller.errorMessage ?? 'Gagal menghapus'),
+          success
+              ? 'Task berhasil dihapus'
+              : (_controller.errorMessage ?? 'Gagal menghapus'),
         ),
       ),
     );
   }
 
   Future<void> _goToForm({TaskModel? existingTask}) async {
-    final result = await Navigator.of(context).pushNamed(
-      AppRoutes.taskForm,
-      arguments: existingTask,
-    );
-    if (result == true) _loadTasks();
+    final result = await Navigator.of(
+      context,
+    ).pushNamed(AppRoutes.taskForm, arguments: existingTask);
+    if (result is String) {
+      await _loadTasks();
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(result)));
+    }
   }
 
   Future<void> _goToDetail(TaskModel task) async {
-    await Navigator.of(context).pushNamed(
-      AppRoutes.taskDetail,
-      arguments: task,
-    );
-    _loadTasks();
+    final result = await Navigator.of(
+      context,
+    ).pushNamed(AppRoutes.taskDetail, arguments: task);
+    await _loadTasks();
+    if (result is String && mounted) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(result)));
+    }
   }
 
   @override

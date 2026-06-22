@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
+import '../../core/utils/task_change_notifier.dart';
 import '../date/date_page.dart';
 import '../home/home_page.dart';
 import '../profile/profile_page.dart';
@@ -12,6 +13,16 @@ import '../task/task_list_page.dart';
 /// tiap tab (misal scroll position, hasil fetch) tidak hilang saat
 /// pindah-pindah tab — masing-masing child tetap "hidup" di belakang,
 /// cuma yang aktif yang ditampilkan.
+///
+/// REAL-TIME SYNC ANTAR TAB:
+/// Karena setiap tab fetch data secara independen (tidak ada shared
+/// state/store), shell ini mendengarkan [TaskChangeNotifier] — begitu
+/// ada task yang berhasil ditambah/diubah/dihapus dari tab manapun,
+/// shell menaikkan `_refreshTick` lalu memberi ValueKey baru ke
+/// HomePage & DatePage. Flutter akan men-dispose lalu membuat ulang
+/// kedua widget itu dari nol (initState terpanggil lagi -> fetch data
+/// terbaru), tanpa mengganggu TaskListPage yang sedang aktif atau
+/// ProfilePage yang tidak terkait data task.
 class MainShellPage extends StatefulWidget {
   const MainShellPage({super.key});
 
@@ -21,13 +32,25 @@ class MainShellPage extends StatefulWidget {
 
 class _MainShellPageState extends State<MainShellPage> {
   int _currentIndex = 0;
+  int _refreshTick = 0;
 
-  final List<Widget> _tabs = const [
-    HomePage(),
-    TaskListPage(),
-    DatePage(),
-    ProfilePage(),
-  ];
+  late final VoidCallback _taskChangeListener;
+
+  @override
+  void initState() {
+    super.initState();
+    _taskChangeListener = () {
+      if (!mounted) return;
+      setState(() => _refreshTick++);
+    };
+    TaskChangeNotifier().addListener(_taskChangeListener);
+  }
+
+  @override
+  void dispose() {
+    TaskChangeNotifier().removeListener(_taskChangeListener);
+    super.dispose();
+  }
 
   void _onTabTapped(int index) {
     setState(() => _currentIndex = index);
@@ -35,8 +58,15 @@ class _MainShellPageState extends State<MainShellPage> {
 
   @override
   Widget build(BuildContext context) {
+    final tabs = [
+      HomePage(key: ValueKey('home_$_refreshTick')),
+      const TaskListPage(),
+      DatePage(key: ValueKey('date_$_refreshTick')),
+      const ProfilePage(),
+    ];
+
     return Scaffold(
-      body: IndexedStack(index: _currentIndex, children: _tabs),
+      body: IndexedStack(index: _currentIndex, children: tabs),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: _onTabTapped,

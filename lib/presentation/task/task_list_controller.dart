@@ -1,4 +1,5 @@
 import '../../core/network/api_exception.dart';
+import '../../core/utils/task_change_notifier.dart';
 import '../../data/models/task_model.dart';
 import '../../data/models/task_status.dart';
 import '../../domain/repositories/task_repository.dart';
@@ -82,6 +83,7 @@ class TaskListController {
       final updated = await _taskRepository.updateStatus(task, newStatus);
       final index = _allTasks.indexWhere((t) => t.id == task.id);
       if (index != -1) _allTasks[index] = updated;
+      TaskChangeNotifier().notify();
       return true;
     } on ApiException catch (e) {
       errorMessage = e.message;
@@ -96,6 +98,7 @@ class TaskListController {
     try {
       await _taskRepository.deleteTask(id);
       _allTasks.removeWhere((t) => t.id == id);
+      TaskChangeNotifier().notify();
       return true;
     } on ApiException catch (e) {
       errorMessage = e.message;

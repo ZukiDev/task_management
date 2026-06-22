@@ -191,7 +191,14 @@ class _HomePageState extends State<HomePage> {
               task: task,
               onTap: () => Navigator.of(context)
                   .pushNamed(AppRoutes.taskDetail, arguments: task)
-                  .then((_) => _loadData()),
+                  .then((result) async {
+                    await _loadData();
+                    if (result is String && mounted) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(result)));
+                    }
+                  }),
             ),
           ),
         )
