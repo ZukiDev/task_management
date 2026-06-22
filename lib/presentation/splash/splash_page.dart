@@ -4,9 +4,6 @@ import '../../core/routing/app_routes.dart';
 import '../../data/local/session_storage.dart';
 import 'splash_controller.dart';
 
-/// Halaman pertama yang muncul saat app dibuka. Mengecek apakah ada
-/// session login yang masih valid, lalu mengarahkan ke Main Shell
-/// (kalau sudah login) atau Login Page (kalau belum / token expired).
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -25,8 +22,6 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _navigateAfterCheck() async {
-    // Memberi sedikit delay agar splash tidak "berkedip" terlalu cepat
-    // jika pengecekan session sangat instan.
     final result = await Future.wait([
       _controller.checkSession(),
       Future.delayed(const Duration(milliseconds: 800)),

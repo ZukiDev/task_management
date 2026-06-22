@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 
-/// Kartu kecil menampilkan satu angka statistik (misal "Total: 12").
-/// Dipakai berjajar 3x di Home Page (Total, Done, Pending).
 class SummaryStatCard extends StatelessWidget {
   final String label;
   final int value;

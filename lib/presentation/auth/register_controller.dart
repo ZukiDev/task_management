@@ -1,7 +1,6 @@
 import '../../core/network/api_exception.dart';
 import '../../domain/repositories/auth_repository.dart';
 
-/// Controller untuk Register Page. Pola sama dengan [LoginController].
 class RegisterController {
   final AuthRepository _authRepository;
 

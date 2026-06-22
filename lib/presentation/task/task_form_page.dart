@@ -11,12 +11,6 @@ import '../../data/models/task_priority.dart';
 import '../../data/repositories/task_repository_impl.dart';
 import 'task_form_controller.dart';
 
-/// Halaman form, dipakai untuk DUA mode sekaligus:
-/// - Add (existingTask == null): judul "Tambah Task"
-/// - Edit (existingTask != null): judul "Edit Task", field di-prefill
-///
-/// Pendekatan satu halaman untuk dua mode ini menghindari duplikasi
-/// kode form yang sebenarnya identik strukturnya.
 class TaskFormPage extends StatefulWidget {
   final TaskModel? existingTask;
 

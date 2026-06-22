@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
-/// Text style terpusat. Hindari menulis TextStyle inline berulang-ulang
-/// di banyak widget — cukup pakai salah satu dari sini.
 class AppTextStyles {
   AppTextStyles._();
 

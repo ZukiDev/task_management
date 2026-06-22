@@ -14,13 +14,6 @@ import '../../data/repositories/task_repository_impl.dart';
 import '../widgets/priority_badge.dart';
 import '../widgets/status_badge.dart';
 
-/// Halaman detail task. Menampilkan seluruh field lengkap, tombol
-/// toggle status, serta aksi Edit dan Hapus.
-///
-/// Halaman ini cukup sederhana sehingga tidak memerlukan Controller
-/// terpisah — state ditangani langsung di StatefulWidget memakai
-/// TaskRepository, konsisten dengan keputusan "controller dipakai bila
-/// ada logic non-trivial; halaman read-mostly cukup state lokal".
 class TaskDetailPage extends StatefulWidget {
   final TaskModel task;
 
@@ -77,14 +70,10 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
       context,
     ).pushNamed(AppRoutes.taskForm, arguments: _task);
     if (result is String) {
-      // Ambil ulang data terbaru setelah edit.
       try {
         final refreshed = await taskRepository.getTaskById(_task.id);
         setState(() => _task = refreshed);
-      } catch (_) {
-        // Jika gagal refresh, tetap tampilkan data lama tanpa mengganggu
-        // pengalaman pengguna dengan error tambahan.
-      }
+      } catch (_) {}
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,

@@ -6,23 +6,6 @@ import '../home/home_page.dart';
 import '../profile/profile_page.dart';
 import '../task/task_list_page.dart';
 
-/// Widget pemegang BottomNavigationBar dengan 4 tab: Home, Task, Date,
-/// Profile.
-///
-/// Memakai [IndexedStack] (bukan ganti widget langsung) supaya state
-/// tiap tab (misal scroll position, hasil fetch) tidak hilang saat
-/// pindah-pindah tab — masing-masing child tetap "hidup" di belakang,
-/// cuma yang aktif yang ditampilkan.
-///
-/// REAL-TIME SYNC ANTAR TAB:
-/// Karena setiap tab fetch data secara independen (tidak ada shared
-/// state/store), shell ini mendengarkan [TaskChangeNotifier] — begitu
-/// ada task yang berhasil ditambah/diubah/dihapus dari tab manapun,
-/// shell menaikkan `_refreshTick` lalu memberi ValueKey baru ke
-/// HomePage & DatePage. Flutter akan men-dispose lalu membuat ulang
-/// kedua widget itu dari nol (initState terpanggil lagi -> fetch data
-/// terbaru), tanpa mengganggu TaskListPage yang sedang aktif atau
-/// ProfilePage yang tidak terkait data task.
 class MainShellPage extends StatefulWidget {
   const MainShellPage({super.key});
 

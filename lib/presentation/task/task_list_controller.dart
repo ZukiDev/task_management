@@ -4,10 +4,8 @@ import '../../data/models/task_model.dart';
 import '../../data/models/task_status.dart';
 import '../../domain/repositories/task_repository.dart';
 
-/// Filter status yang bisa dipilih user di Task List Page.
 enum TaskStatusFilter { all, pending, done }
 
-/// Controller untuk Task List Page (full CRUD list).
 class TaskListController {
   final TaskRepository _taskRepository;
 
@@ -35,7 +33,6 @@ class TaskListController {
           .toList();
     }
 
-    // Task yang belum selesai & due date terdekat tampil lebih dulu.
     final sorted = [...result]
       ..sort((a, b) {
         if (a.status != b.status) {
@@ -72,8 +69,6 @@ class TaskListController {
     }
   }
 
-  /// Toggle status langsung dari list (checkbox di TaskCard) tanpa
-  /// masuk ke halaman detail. Mengembalikan true jika berhasil.
   Future<bool> toggleStatus(TaskModel task) async {
     final newStatus = task.status == TaskStatus.done
         ? TaskStatus.pending

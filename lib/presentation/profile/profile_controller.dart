@@ -2,9 +2,6 @@ import '../../data/models/user_model.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/repositories/profile_repository.dart';
 
-/// Controller untuk Profile Page utama (bukan untuk sub-halaman edit
-/// nama/foto/password — masing-masing punya controller sederhana
-/// sendiri agar tetap fokus single-responsibility).
 class ProfileController {
   final ProfileRepository _profileRepository;
   final AuthRepository _authRepository;

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 
-/// Indikator loading terpusat. Dipakai di semua page yang punya state
-/// loading agar tampilannya konsisten di seluruh app.
 class AppLoading extends StatelessWidget {
   final String? message;
 

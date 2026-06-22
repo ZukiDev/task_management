@@ -4,9 +4,6 @@ import '../../data/models/task_priority.dart';
 import '../../data/models/task_status.dart';
 import '../../domain/repositories/task_repository.dart';
 
-/// Controller untuk Task Form Page. Dipakai untuk dua mode:
-/// - Add: [existingTask] null -> submit memanggil `addTask`
-/// - Edit: [existingTask] terisi -> submit memanggil `updateTask`
 class TaskFormController {
   final TaskRepository _taskRepository;
   final TaskModel? existingTask;

@@ -1,7 +1,3 @@
-/// Kumpulan fungsi validasi untuk dipakai sebagai `validator` di
-/// `TextFormField`. Setiap fungsi mengembalikan `null` jika valid,
-/// atau pesan error (String) jika tidak valid — sesuai kontrak
-/// `FormFieldValidator` Flutter.
 class Validators {
   Validators._();
 

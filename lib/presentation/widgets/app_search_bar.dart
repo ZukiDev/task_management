@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 
-/// Search bar reusable dipakai di Home Page dan Task Page.
 class AppSearchBar extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;

@@ -2,14 +2,6 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_model.dart';
 
-/// Wrapper di atas `shared_preferences`, satu-satunya tempat di seluruh
-/// app yang tahu key-key apa yang dipakai untuk menyimpan data lokal
-/// terkait session & profile.
-///
-/// Kenapa dipisah jadi class sendiri (bukan panggil SharedPreferences
-/// langsung dari repository): supaya kalau nanti pindah dari
-/// shared_preferences ke solusi lain (misal Hive atau secure_storage
-/// untuk token), cukup ubah file ini, tidak perlu sentuh repository.
 class SessionStorage {
   static const _keyToken = 'auth_token';
   static const _keyTokenType = 'auth_token_type';
@@ -63,8 +55,6 @@ class SessionStorage {
     return UserModel.fromLocalJson(jsonDecode(raw) as Map<String, dynamic>);
   }
 
-  /// Memperbarui data user yang tersimpan (dipanggil saat ganti nama/foto)
-  /// tanpa mengubah token/session yang sedang aktif.
   Future<void> updateStoredUser(UserModel user) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_keyUser, jsonEncode(user.toLocalJson()));

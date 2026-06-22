@@ -1,5 +1,3 @@
-/// Prioritas sebuah task. Sama seperti [TaskStatus], disimpan sebagai
-/// String di sisi API ("low" / "medium" / "high").
 enum TaskPriority {
   low,
   medium,

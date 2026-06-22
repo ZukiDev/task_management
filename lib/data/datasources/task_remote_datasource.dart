@@ -2,12 +2,6 @@ import '../../core/network/api_client.dart';
 import '../models/task_model.dart';
 import '../models/task_status.dart';
 
-/// Datasource yang tahu detail endpoint task restful-api.dev.
-///
-/// Semua method butuh [collectionName] (hasil dari
-/// `CollectionNameHelper.fromEmail`) dan [token] JWT user yang sedang
-/// login — keduanya disuplai oleh [TaskRepositoryImpl], datasource ini
-/// tidak tahu cara mendapatkannya (tidak bergantung ke SessionStorage).
 class TaskRemoteDatasource {
   final ApiClient _apiClient;
 

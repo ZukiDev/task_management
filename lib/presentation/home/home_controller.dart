@@ -5,13 +5,6 @@ import '../../data/models/task_status.dart';
 import '../../data/models/user_model.dart';
 import '../../domain/repositories/task_repository.dart';
 
-/// Controller untuk Home Page (dashboard).
-///
-/// Bertugas: ambil semua task (lewat [TaskRepository]) lalu hitung
-/// ringkasan (total/done/pending), ambil user yang sedang login (untuk
-/// profile bar), dan menyediakan fungsi search sederhana di sisi klien
-/// (filter dari list yang sudah di-fetch — tidak perlu endpoint search
-/// terpisah karena restful-api.dev tidak menyediakannya).
 class HomeController {
   final TaskRepository _taskRepository;
   final SessionStorage _sessionStorage;
@@ -30,8 +23,6 @@ class HomeController {
   int get pendingCount =>
       _allTasks.where((t) => t.status == TaskStatus.pending).length;
 
-  /// Task terbaru (maksimal 5) yang ditampilkan di Home, sudah
-  /// terfilter oleh [searchQuery] jika ada.
   List<TaskModel> get recentTasks {
     final filtered = _filterBySearch(_allTasks);
     final sorted = [...filtered]

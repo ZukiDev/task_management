@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 
-/// Tampilan saat data kosong (misal belum ada task sama sekali, atau
-/// hasil pencarian tidak ditemukan). Dipakai di Task List, Home, Date.
 class AppEmptyState extends StatelessWidget {
   final IconData icon;
   final String title;

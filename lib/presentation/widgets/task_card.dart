@@ -6,8 +6,6 @@ import '../../data/models/task_status.dart';
 import 'priority_badge.dart';
 import 'status_badge.dart';
 
-/// Kartu task reusable. Dipakai di Task List Page, Home Page (recent
-/// tasks), dan Date Page (list task per tanggal terpilih).
 class TaskCard extends StatelessWidget {
   final TaskModel task;
   final VoidCallback onTap;

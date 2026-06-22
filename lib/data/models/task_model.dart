@@ -1,25 +1,6 @@
 import 'task_priority.dart';
 import 'task_status.dart';
 
-/// Model Task di sisi aplikasi.
-///
-/// CATATAN PENTING soal mapping schema:
-/// restful-api.dev (authenticated) hanya punya schema objek generik:
-///   { "id": "...", "name": "...", "data": { ...bebas apa saja... } }
-///
-/// Sedangkan app butuh field: title, description, status, dueDate, priority.
-/// Supaya layer lain (presentation, domain) tidak perlu tahu soal
-/// keterbatasan ini, semua translasi dikerjakan di method
-/// [TaskModel.fromApiJson] dan [TaskModel.toApiJson]:
-///
-///   App field   -> Lokasi di JSON API
-///   ---------------------------------
-///   id          -> json['id']
-///   title       -> json['name']
-///   description -> json['data']['description']
-///   status      -> json['data']['status']
-///   dueDate     -> json['data']['dueDate']   (ISO 8601 string)
-///   priority    -> json['data']['priority']
 class TaskModel {
   final String id;
   final String title;
@@ -37,8 +18,6 @@ class TaskModel {
     required this.priority,
   });
 
-  /// Dipakai untuk membuat task baru sebelum dikirim ke server
-  /// (belum punya id, id akan diisi server saat response POST diterima).
   factory TaskModel.draft({
     required String title,
     required String description,
@@ -56,7 +35,6 @@ class TaskModel {
     );
   }
 
-  /// Parsing response dari GET/POST/PUT/PATCH restful-api.dev.
   factory TaskModel.fromApiJson(Map<String, dynamic> json) {
     final data = (json['data'] as Map<String, dynamic>?) ?? {};
     return TaskModel(
@@ -71,7 +49,6 @@ class TaskModel {
     );
   }
 
-  /// Body yang dikirim saat POST (create) atau PUT (full update).
   Map<String, dynamic> toApiJson() {
     return {
       'name': title,
@@ -84,8 +61,6 @@ class TaskModel {
     };
   }
 
-  /// Body parsial dipakai khusus saat update status lewat PATCH —
-  /// tidak mengirim ulang seluruh field, cukup yang berubah.
   Map<String, dynamic> toStatusPatchJson(TaskStatus newStatus) {
     return {
       'data': {

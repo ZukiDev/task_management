@@ -5,12 +5,6 @@ import '../local/session_storage.dart';
 import '../models/task_model.dart';
 import '../models/task_status.dart';
 
-/// Implementasi [TaskRepository].
-///
-/// Sebelum memanggil [TaskRemoteDatasource], repository ini selalu
-/// mengambil token & nama collection terbaru dari [SessionStorage] —
-/// sehingga datasource sendiri tidak perlu tahu dari mana token/
-/// collection itu berasal (separation of concern).
 class TaskRepositoryImpl implements TaskRepository {
   final TaskRemoteDatasource _remoteDatasource;
   final SessionStorage _sessionStorage;

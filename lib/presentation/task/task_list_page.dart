@@ -14,9 +14,6 @@ import '../widgets/app_search_bar.dart';
 import '../widgets/task_card.dart';
 import 'task_list_controller.dart';
 
-/// Halaman Task List (tab kedua). Full CRUD: lihat semua task, search,
-/// filter status, tambah (FAB), edit, hapus, toggle status langsung
-/// dari checkbox di kartu.
 class TaskListPage extends StatefulWidget {
   const TaskListPage({super.key});
 
@@ -245,7 +242,7 @@ class _TaskListPageState extends State<TaskListPage> {
             direction: DismissDirection.endToStart,
             confirmDismiss: (_) async {
               await _handleDelete(task);
-              return false; // delete sudah ditangani manual di atas
+              return false;
             },
             background: Container(
               alignment: Alignment.centerRight,

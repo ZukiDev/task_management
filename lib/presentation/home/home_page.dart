@@ -15,11 +15,6 @@ import '../widgets/summary_stat_card.dart';
 import '../widgets/task_card.dart';
 import 'home_controller.dart';
 
-/// Halaman dashboard (tab pertama bottom navigation). Menampilkan:
-/// - profile bar (foto + nama user)
-/// - search bar (filter task dari sisi klien)
-/// - summary card (total / done / pending)
-/// - daftar 5 task terbaru
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 

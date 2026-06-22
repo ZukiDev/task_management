@@ -14,13 +14,6 @@ import '../widgets/app_loading.dart';
 import '../widgets/task_card.dart';
 import 'date_controller.dart';
 
-/// Halaman Date (tab ketiga). Terbagi 2 bagian:
-/// 1. Kalender bulanan (pakai package `table_calendar`) — tiap tanggal
-///    menampilkan badge kecil berisi jumlah task pada hari itu.
-/// 2. Daftar task pada tanggal yang sedang dipilih, di bawah kalender.
-///
-/// Read-only sesuai keputusan sebelumnya: task hanya bisa dilihat
-/// detailnya (tap kartu -> Task Detail), tidak ada tambah/edit di sini.
 class DatePage extends StatefulWidget {
   const DatePage({super.key});
 

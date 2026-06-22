@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 
-/// Tampilan saat terjadi error (network, server, dll) lengkap dengan
-/// tombol "Coba Lagi". Dipakai di semua page yang melakukan fetch data.
 class AppErrorView extends StatelessWidget {
   final String message;
   final VoidCallback? onRetry;

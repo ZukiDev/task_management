@@ -4,15 +4,6 @@ import 'package:http/http.dart' as http;
 import '../constants/api_constants.dart';
 import 'api_exception.dart';
 
-/// Wrapper tipis di atas package `http`.
-///
-/// Tanggung jawab class ini HANYA:
-/// 1. Menempelkan header yang diperlukan (`x-api-key`, `Authorization`, dll)
-/// 2. Mengubah response jadi `Map<String, dynamic>` / `List` siap pakai
-/// 3. Mengubah status code error jadi [ApiException] yang jelas
-///
-/// Class ini tidak tahu apa-apa soal Task atau User — itu tanggung jawab
-/// datasource yang memanggilnya. Ini murni layer transport.
 class ApiClient {
   final http.Client _client;
 
@@ -22,9 +13,7 @@ class ApiClient {
     if (ApiConstants.apiKey.isEmpty) {
       throw const ConfigurationException();
     }
-    final headers = <String, String>{
-      'x-api-key': ApiConstants.apiKey,
-    };
+    final headers = <String, String>{'x-api-key': ApiConstants.apiKey};
     if (withBody) {
       headers['Content-Type'] = 'application/json';
     }
@@ -47,10 +36,12 @@ class ApiClient {
     String? token,
     Map<String, dynamic>? queryParams,
   }) async {
-    return _send(() => _client.get(
-          _buildUri(path, queryParams),
-          headers: _buildHeaders(token: token),
-        ));
+    return _send(
+      () => _client.get(
+        _buildUri(path, queryParams),
+        headers: _buildHeaders(token: token),
+      ),
+    );
   }
 
   Future<dynamic> post(
@@ -59,11 +50,13 @@ class ApiClient {
     Map<String, dynamic>? body,
     Map<String, dynamic>? queryParams,
   }) async {
-    return _send(() => _client.post(
-          _buildUri(path, queryParams),
-          headers: _buildHeaders(token: token, withBody: true),
-          body: jsonEncode(body ?? {}),
-        ));
+    return _send(
+      () => _client.post(
+        _buildUri(path, queryParams),
+        headers: _buildHeaders(token: token, withBody: true),
+        body: jsonEncode(body ?? {}),
+      ),
+    );
   }
 
   Future<dynamic> put(
@@ -72,11 +65,13 @@ class ApiClient {
     Map<String, dynamic>? body,
     Map<String, dynamic>? queryParams,
   }) async {
-    return _send(() => _client.put(
-          _buildUri(path, queryParams),
-          headers: _buildHeaders(token: token, withBody: true),
-          body: jsonEncode(body ?? {}),
-        ));
+    return _send(
+      () => _client.put(
+        _buildUri(path, queryParams),
+        headers: _buildHeaders(token: token, withBody: true),
+        body: jsonEncode(body ?? {}),
+      ),
+    );
   }
 
   Future<dynamic> patch(
@@ -85,11 +80,13 @@ class ApiClient {
     Map<String, dynamic>? body,
     Map<String, dynamic>? queryParams,
   }) async {
-    return _send(() => _client.patch(
-          _buildUri(path, queryParams),
-          headers: _buildHeaders(token: token, withBody: true),
-          body: jsonEncode(body ?? {}),
-        ));
+    return _send(
+      () => _client.patch(
+        _buildUri(path, queryParams),
+        headers: _buildHeaders(token: token, withBody: true),
+        body: jsonEncode(body ?? {}),
+      ),
+    );
   }
 
   Future<dynamic> delete(
@@ -97,14 +94,14 @@ class ApiClient {
     String? token,
     Map<String, dynamic>? queryParams,
   }) async {
-    return _send(() => _client.delete(
-          _buildUri(path, queryParams),
-          headers: _buildHeaders(token: token),
-        ));
+    return _send(
+      () => _client.delete(
+        _buildUri(path, queryParams),
+        headers: _buildHeaders(token: token),
+      ),
+    );
   }
 
-  /// Menjalankan request, menangani exception transport-level (no internet,
-  /// timeout), lalu mendelegasikan parsing response ke [_handleResponse].
   Future<dynamic> _send(Future<http.Response> Function() request) async {
     try {
       final response = await request().timeout(const Duration(seconds: 20));
@@ -114,18 +111,16 @@ class ApiClient {
     } on HttpException {
       throw const NetworkException();
     } on FormatException {
-      throw const NetworkException(
-        'Format respons dari server tidak valid.',
-      );
+      throw const NetworkException('Format respons dari server tidak valid.');
     }
   }
 
   dynamic _handleResponse(http.Response response) {
     final statusCode = response.statusCode;
 
-    // Tubuh response bisa kosong (misal pada beberapa DELETE).
-    final dynamic decoded =
-        response.body.isNotEmpty ? jsonDecode(response.body) : null;
+    final dynamic decoded = response.body.isNotEmpty
+        ? jsonDecode(response.body)
+        : null;
 
     if (statusCode >= 200 && statusCode < 300) {
       return decoded;

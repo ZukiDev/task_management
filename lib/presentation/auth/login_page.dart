@@ -9,8 +9,6 @@ import '../../data/local/session_storage.dart';
 import '../../data/repositories/auth_repository_impl.dart';
 import 'login_controller.dart';
 
-/// Halaman Login. StatefulWidget murni untuk UI: render form, validasi
-/// lewat Form/TextFormField, dan delegasikan logic ke [LoginController].
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -29,9 +27,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    // Dependency dirakit manual di sini (tanpa DI framework) — cukup
-    // untuk scope app ini. Kalau project membesar, ini titik yang
-    // mudah diganti dengan service locator (get_it) atau Provider.
     final sessionStorage = SessionStorage();
     final apiClient = ApiClient();
     final authRepository = AuthRepositoryImpl(
@@ -51,7 +46,6 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
 
-    setState(() {}); // trigger build agar tombol loading muncul cepat
     final success = await _controller.login(
       email: _emailController.text.trim(),
       password: _passwordController.text,

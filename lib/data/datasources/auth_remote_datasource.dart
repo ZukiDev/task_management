@@ -1,10 +1,6 @@
 import '../../core/network/api_client.dart';
 import '../models/auth_response_model.dart';
 
-/// Datasource yang tahu detail endpoint autentikasi restful-api.dev.
-/// Hanya bertugas membentuk request & parsing response — tidak ada
-/// logic penyimpanan session di sini (itu tanggung jawab
-/// [AuthRepositoryImpl] yang memanggil [SessionStorage]).
 class AuthRemoteDatasource {
   final ApiClient _apiClient;
 

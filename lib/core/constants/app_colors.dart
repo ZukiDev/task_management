@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Palet warna terpusat. Semua widget mengambil warna dari sini supaya
-/// gampang diubah konsisten di satu tempat (bukan hardcode di tiap widget).
 class AppColors {
   AppColors._();
 
@@ -25,7 +23,6 @@ class AppColors {
 
   static const Color border = Color(0xFFE6E8F0);
 
-  // Priority colors
   static const Color priorityLow = Color(0xFF22B07D);
   static const Color priorityMedium = Color(0xFFE8A33D);
   static const Color priorityHigh = Color(0xFFE5484D);

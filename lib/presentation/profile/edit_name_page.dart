@@ -6,9 +6,6 @@ import '../../data/datasources/profile_local_datasource.dart';
 import '../../data/local/session_storage.dart';
 import '../../data/repositories/profile_repository_impl.dart';
 
-/// Halaman sederhana untuk mengubah nama. Tidak perlu Controller
-/// terpisah karena logic-nya satu baris (panggil repository), state
-/// loading cukup field lokal di State.
 class EditNamePage extends StatefulWidget {
   const EditNamePage({super.key});
 
@@ -38,9 +35,7 @@ class _EditNamePageState extends State<EditNamePage> {
     try {
       final profile = await _profileRepository.getProfile();
       _nameController.text = profile.name;
-    } catch (_) {
-      // Biarkan field kosong jika gagal — user tetap bisa mengisi manual.
-    }
+    } catch (_) {}
     if (mounted) setState(() => _isLoading = false);
   }
 

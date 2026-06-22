@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../data/models/task_status.dart';
 
-/// Badge kecil menampilkan status task (Done/Pending) dengan warna sesuai.
-/// Reusable dipakai di TaskCard, TaskDetailPage, dan HomePage.
 class StatusBadge extends StatelessWidget {
   final TaskStatus status;
 

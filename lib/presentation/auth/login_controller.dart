@@ -1,14 +1,6 @@
 import '../../core/network/api_exception.dart';
 import '../../domain/repositories/auth_repository.dart';
 
-/// Controller untuk Login Page.
-///
-/// Pola yang konsisten dipakai di semua controller pada app ini:
-/// - field `is...Loading` / `errorMessage` adalah STATE.
-/// - method `Future<bool> login(...)` MENGUBAH state lalu return
-///   true/false sebagai sinyal sukses/gagal ke widget.
-/// - Widget (StatefulWidget) memanggil method ini lalu `setState(() {})`
-///   supaya UI ikut re-render sesuai state terbaru di controller.
 class LoginController {
   final AuthRepository _authRepository;
 

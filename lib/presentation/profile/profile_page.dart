@@ -11,8 +11,6 @@ import '../../data/repositories/profile_repository_impl.dart';
 import 'profile_controller.dart';
 import '../../core/network/api_client.dart';
 
-/// Halaman Profile (tab keempat). Menampilkan foto & nama user, dan
-/// menu: Ubah Nama, Ubah Foto, Ubah Password, Logout.
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 

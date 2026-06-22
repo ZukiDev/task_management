@@ -4,11 +4,6 @@ import '../datasources/auth_remote_datasource.dart';
 import '../local/session_storage.dart';
 import '../models/user_model.dart';
 
-/// Implementasi [AuthRepository].
-///
-/// Tugasnya mengorkestrasi dua hal: memanggil [AuthRemoteDatasource]
-/// untuk dapat token dari server, lalu menyimpannya lewat
-/// [SessionStorage] supaya user tidak perlu login ulang setiap buka app.
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDatasource _remoteDatasource;
   final SessionStorage _sessionStorage;
@@ -26,8 +21,12 @@ class AuthRepositoryImpl implements AuthRepository {
       email: email,
       password: password,
     );
-    await _persistSession(response.token, response.tokenType,
-        response.expiresAt, response.user);
+    await _persistSession(
+      response.token,
+      response.tokenType,
+      response.expiresAt,
+      response.user,
+    );
     return response.user;
   }
 
@@ -40,8 +39,12 @@ class AuthRepositoryImpl implements AuthRepository {
       email: email,
       password: password,
     );
-    await _persistSession(response.token, response.tokenType,
-        response.expiresAt, response.user);
+    await _persistSession(
+      response.token,
+      response.tokenType,
+      response.expiresAt,
+      response.user,
+    );
     return response.user;
   }
 

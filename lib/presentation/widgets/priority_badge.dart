@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../data/models/task_priority.dart';
 
-/// Badge kecil menampilkan prioritas task dengan dot warna + label.
 class PriorityBadge extends StatelessWidget {
   final TaskPriority priority;
 

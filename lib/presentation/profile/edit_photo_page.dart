@@ -7,9 +7,6 @@ import '../../data/datasources/profile_local_datasource.dart';
 import '../../data/local/session_storage.dart';
 import '../../data/repositories/profile_repository_impl.dart';
 
-/// Halaman ganti foto profil. Foto disimpan sebagai PATH FILE LOKAL
-/// (lewat image_picker) — tidak diunggah ke API karena restful-api.dev
-/// tidak mendukung upload file/image (lihat catatan di [UserModel]).
 class EditPhotoPage extends StatefulWidget {
   const EditPhotoPage({super.key});
 

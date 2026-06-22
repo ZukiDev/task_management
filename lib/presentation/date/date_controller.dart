@@ -3,17 +3,6 @@ import '../../core/utils/date_formatter.dart';
 import '../../data/models/task_model.dart';
 import '../../domain/repositories/task_repository.dart';
 
-/// Controller untuk Date Page (kalender bulanan).
-///
-/// Tidak ada endpoint API khusus "task by date" di restful-api.dev,
-/// jadi controller ini mengambil SEMUA task lewat [TaskRepository]
-/// (sama seperti Task List & Home), lalu mengelompokkannya secara
-/// lokal ke `Map<String, List<TaskModel>>` dengan key berupa
-/// "yyyy-MM-dd" (lihat [DateFormatter.toDateKey]).
-///
-/// Pendekatan ini menghindari pemanggilan API berulang setiap user
-/// ganti bulan/tanggal — cukup fetch sekali, lalu murni operasi
-/// in-memory untuk navigasi kalender.
 class DateController {
   final TaskRepository _taskRepository;
 
@@ -51,14 +40,10 @@ class DateController {
     return map;
   }
 
-  /// Jumlah task pada tanggal tertentu — dipakai untuk badge di grid
-  /// kalender (`table_calendar` eventLoader).
   List<TaskModel> tasksOn(DateTime date) {
     return _tasksByDate[DateFormatter.toDateKey(date)] ?? [];
   }
 
-  /// Daftar task pada tanggal yang sedang dipilih user, diurutkan
-  /// berdasarkan prioritas (high dulu) lalu judul.
   List<TaskModel> get tasksOnSelectedDate {
     final tasks = tasksOn(selectedDate);
     final sorted = [...tasks]

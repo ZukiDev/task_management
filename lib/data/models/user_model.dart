@@ -1,11 +1,3 @@
-/// Model User di sisi aplikasi.
-///
-/// [name] dan [localPhotoPath] bersifat LOKAL — restful-api.dev tidak
-/// punya endpoint untuk update profile user (hanya /register dan /login
-/// yang mengembalikan user dasar: id, email, name dari saat registrasi).
-/// Perubahan nama/foto sesudah register hanya tersimpan di
-/// shared_preferences device ini saja. Lihat README bagian "Known
-/// Limitations" untuk detail & alasan keputusan ini.
 class UserModel {
   final String id;
   final String email;

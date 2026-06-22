@@ -12,11 +12,6 @@ import '../presentation/splash/splash_page.dart';
 import '../presentation/task/task_detail_page.dart';
 import '../presentation/task/task_form_page.dart';
 
-/// Root widget aplikasi. Semua navigasi dikelola lewat satu
-/// [onGenerateRoute] terpusat di sini — bukan tersebar lewat
-/// `MaterialPageRoute` di banyak file `onPressed`. Ini memudahkan
-/// melihat "halaman apa saja yang ada di app ini" dari satu tempat,
-/// dan memudahkan passing argument secara type-safe.
 class TaskTrackerApp extends StatelessWidget {
   const TaskTrackerApp({super.key});
 
@@ -66,7 +61,6 @@ class TaskTrackerApp extends StatelessWidget {
         return MaterialPageRoute(builder: (_) => const MainShellPage());
 
       case AppRoutes.taskForm:
-        // Argument opsional: null = mode Add, TaskModel = mode Edit.
         final task = settings.arguments as TaskModel?;
         return MaterialPageRoute(
           builder: (_) => TaskFormPage(existingTask: task),

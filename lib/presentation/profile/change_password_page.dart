@@ -6,12 +6,6 @@ import '../../data/datasources/profile_local_datasource.dart';
 import '../../data/local/session_storage.dart';
 import '../../data/repositories/profile_repository_impl.dart';
 
-/// Halaman ubah password.
-///
-/// CATATAN: ini adalah SIMULASI LOKAL, bukan terhubung ke server,
-/// karena restful-api.dev tidak punya endpoint untuk mengubah password
-/// user. Lihat dokumentasi di [ProfileLocalDatasource] untuk detail
-/// keterbatasan ini.
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
 

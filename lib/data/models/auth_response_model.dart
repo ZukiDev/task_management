@@ -1,8 +1,5 @@
 import 'user_model.dart';
 
-/// Representasi response dari endpoint `/login` dan `/register`.
-/// Bentuk response keduanya identik:
-/// { token, tokenType, expiresIn, user: { id, email, name } }
 class AuthResponseModel {
   final String token;
   final String tokenType;
@@ -27,6 +24,5 @@ class AuthResponseModel {
     );
   }
 
-  /// Waktu absolut kapan token akan expired, dihitung dari sekarang.
   DateTime get expiresAt => DateTime.now().add(Duration(seconds: expiresIn));
 }
