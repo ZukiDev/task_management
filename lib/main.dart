@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'app/app.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  // Inisialisasi data locale 'id_ID' agar DateFormatter (lib/core/utils)
+  // bisa menampilkan nama bulan/hari dalam Bahasa Indonesia.
+  await initializeDateFormatting('id_ID');
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+  runApp(const TaskTrackerApp());
 }
